@@ -19,10 +19,11 @@ public class EmployeeController {
         return new ResponseEntity<>(savedEmployee, HttpStatus.CREATED);
 
     }
-    @GetMapping
-    public ResponseEntity<String> hii()
+    @GetMapping("{id}")
+    public ResponseEntity<EmployeeDto> getEmployeeId(@PathVariable("id") long employeeId)
     {
-        return new ResponseEntity<>("Hey",HttpStatus.OK);
+        EmployeeDto employeeDto= employeeService.getEmployee(employeeId);
+        return new ResponseEntity<>(employeeDto,HttpStatus.OK);
     }
 
 

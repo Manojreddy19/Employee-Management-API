@@ -2,10 +2,13 @@ package com.example.demo.service;
 
 import com.example.demo.dto.EmployeeDto;
 import com.example.demo.entity.Employee;
+import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.mapper.EmployeeMapper;
 import com.example.demo.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor  // This automatically generates a constructor for final fields
@@ -23,5 +26,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         // Map saved entity back to DTO
         return EmployeeMapper.mapToEmployeeDto(savedEmployee);
+    }
+
+    @Override
+    public EmployeeDto getEmployee(long employeeId) {
+        Employee employee= employeeRepository.findById(employeeId)
+                .orElseThrow(() -> new ResourceNotFoundException("Employee not found with given id "+employeeId));
+
+        return EmployeeMapper.mapToEmployeeDto(employee);
     }
 }
