@@ -8,7 +8,8 @@ import com.example.demo.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor  // This automatically generates a constructor for final fields
@@ -34,5 +35,16 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .orElseThrow(() -> new ResourceNotFoundException("Employee not found with given id "+employeeId));
 
         return EmployeeMapper.mapToEmployeeDto(employee);
+    }
+
+    @Override
+    public List<EmployeeDto> getAllEmployees() {
+        List<Employee> lst=employeeRepository.findAll();
+        List<EmployeeDto> employeeDtoList=new ArrayList<EmployeeDto>();
+        for (Employee employee : lst) {
+            employeeDtoList.add(EmployeeMapper.mapToEmployeeDto(employee));
+
+        }
+        return employeeDtoList;
     }
 }

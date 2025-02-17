@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.demo.service.EmployeeService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("api/employee")
 @AllArgsConstructor
@@ -24,6 +26,13 @@ public class EmployeeController {
     {
         EmployeeDto employeeDto= employeeService.getEmployee(employeeId);
         return new ResponseEntity<>(employeeDto,HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<EmployeeDto>> getAllEmployees()
+    {
+        List<EmployeeDto> employeeDtoList= employeeService.getAllEmployees();
+        return new ResponseEntity<>(employeeDtoList,HttpStatus.OK);
     }
 
 
